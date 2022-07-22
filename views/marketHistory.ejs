@@ -1,0 +1,373 @@
+<% include header.ejs %>
+
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+
+<script>
+    function hide (elements) {
+    elements = elements.length ? elements : [elements];
+    for (var index = 0; index < elements.length; index++) {
+    elements[index].style.display = 'none';
+    }
+    }
+
+    function view (elements) {
+    elements = elements.length ? elements : [elements];
+    for (var index = 0; index < elements.length; index++) {
+    elements[index].style.display = 'block';
+    }
+    }
+
+    function filterboots() {
+        var selection = document.getElementById("boots");
+        var elms = document.querySelectorAll(".boots");
+
+        if (selection.checked) {
+            view(elms);
+        } else {
+            hide(elms);
+        }
+    }
+    function filterhelmet() {
+        var selection = document.getElementById("helmet");
+        var elms = document.querySelectorAll(".helmet");
+
+        if (selection.checked) {
+            view(elms);
+        } else {
+            hide(elms);
+        }
+    }
+    function filtersword() {
+        var selection = document.getElementById("sword");
+        var elms = document.querySelectorAll(".sword");
+
+        if (selection.checked) {
+            view(elms);
+        } else {
+            hide(elms);
+        }
+    }
+    function filterarmor() {
+        var selection = document.getElementById("armor");
+        var elms = document.querySelectorAll(".armor");
+
+        if (selection.checked) {
+            view(elms);
+        } else {
+            hide(elms);
+        }
+    }
+</script>
+
+<div class="vsebina">
+        <% if (locals.blockChain) { %>
+            <h2>Zgodovina transakcij: </h2>
+            <div class="container" style="float: left">
+                    <div class="row">
+                            <div class="col-sm-2">
+                                    <p>Filtriraj:</p>
+                                    <input type="checkbox" id="boots" name="boots1" onclick="filterboots()" checked> Boots<br>
+                                    <input type="checkbox" id="helmet" name="helmet1" onclick="filterhelmet()" checked> Helmets<br>
+                                    <input type="checkbox" id="sword" name="sword1" onclick="filtersword()" checked> Swords<br>
+                                    <input type="checkbox" id="armor" name="armor1" onclick="filterarmor()" checked> Armours<br>
+                            </div>
+                            <div class="col-sm-10">
+                                <canvas id="pricechart" ></canvas>
+                                    
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                                
+                                <table style="margin-top: 100" class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Slika</th>
+                                            <th>Nakazal</th>
+                                            <th>Nakazatelj prejme item</th>
+                                            <th>Prejel valuto</th>
+                                            <th>Velikost transakcije</th>
+                                        </tr>
+                                    </thead>
+            <% for(var i=blockChain.length-1; i >= 0; i--) { %>
+                            <% for(var j=1; j < blockChain[i].transakcije.length; j++) { %>
+                                <% if(JSON.parse(blockChain[i].transakcije[j]).item_me.length == 0){ %>
+                                    <!--<p style="font-weight: bold">Transactions </p>-->
+                                <tbody>
+                                    <tr class="<%= JSON.parse(blockChain[i].transakcije[j]).item_other[0][0].type %>">
+                                            <td><img id="itempic" height="55" width="55" style="float:left" src=<%= JSON.parse(blockChain[i].transakcije[j]).item_other[0][0].image %>></td> 
+                                            <td><%= JSON.parse(blockChain[i].transakcije[j]).user_me %></td> 
+                                            <td><%= JSON.parse(blockChain[i].transakcije[j]).item_other[0][0].name %></td>
+                                            <td><%= JSON.parse(blockChain[i].transakcije[j]).user_other %> </td>
+                                            <td><%= JSON.parse(blockChain[i].transakcije[j]).value %> valute</td>
+                                    </tr>
+                                </tbody>
+                                <% } %>
+                            <% } %>
+                    <!--<p><%= blockChain[i].transakcije %></p>-->
+            <% } %>
+        </table>
+                        </div>
+                    </div>
+            </div>
+        <% } %>
+</div>
+<script>
+    let pricechart = document.getElementById("pricechart").getContext("2d");
+    var block = <%- JSON.stringify(blockChain)%>;
+    //alert(block.length);
+    //alert(block[1].timestamp);
+    var dates = [];
+    var data1 = [];
+    var data2 = [];
+    var data3 = [];
+    var data4 = [];
+    var data5 = [];
+    var data6 = [];
+    var data7 = [];
+    var data8 = [];
+    var data9 = [];
+    var data10 = [];
+    var data11 = [];
+    var data12 = [];
+    var data13 = [];
+    var data14 = [];
+
+    for(var p=0;p<block.length;p++){
+        dates.push(block[p].timestamp);
+                if(data1.length > 0){
+                    data1.push(data1[data1.length-1]);
+                }else{
+                    data1.push(0);
+                }
+                if(data2.length > 0){
+                    data2.push(data2[data2.length-1]);
+                }else{
+                    data2.push(0);
+                }
+                if(data3.length > 0){
+                    data3.push(data3[data3.length-1]);
+                }else{
+                    data3.push(0);
+                }
+                if(data4.length > 0){
+                    data4.push(data4[data4.length-1]);
+                }else{
+                    data4.push(0);
+                }
+                if(data5.length > 0){
+                    data5.push(data5[data5.length-1]);
+                }else{
+                    data5.push(0);
+                }
+                if(data6.length > 0){
+                    data6.push(data6[data6.length-1]);
+                }else{
+                    data6.push(0);
+                }
+                if(data7.length > 0){
+                    data7.push(data7[data7.length-1]);
+                }else{
+                    data7.push(0);
+                }
+                if(data8.length > 0){
+                    data8.push(data8[data8.length-1]);
+                }else{
+                    data8.push(0);
+                }
+                if(data9.length > 0){
+                    data9.push(data9[data9.length-1]);
+                }else{
+                    data9.push(0);
+                }
+                if(data10.length > 0){
+                    data10.push(data10[data10.length-1]);
+                }else{
+                    data10.push(0);
+                }
+                if(data11.length > 0){
+                    data11.push(data11[data11.length-1]);
+                }else{
+                    data11.push(0);
+                }
+                if(data12.length > 0){
+                    data12.push(data12[data12.length-1]);
+                }else{
+                    data12.push(0);
+                }
+                if(data13.length > 0){
+                    data13.push(data13[data13.length-1]);
+                }else{
+                    data13.push(0);
+                }
+                if(data14.length > 0){
+                    data14.push(data14[data14.length-1]);
+                }else{
+                    data14.push(0);
+                }
+            for(var j=1; j < block[p].transakcije.length; j++) {
+            if(JSON.parse(block[p].transakcije[j]).item_me.length == 0){
+                if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "Sword1"){
+                    data1.pop();
+                    data1.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "Sword2"){
+                    data2.pop();
+                    data2.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "Sword3"){
+                    data3.pop();
+                    data3.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "Sword4"){
+                    data4.pop();
+                    data4.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "armor1"){
+                    data5.pop();
+                    data5.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "armor2"){
+                    data6.pop();
+                    data6.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "armor3"){
+                    data7.pop();
+                    data7.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "boots1"){
+                    data8.pop();
+                    data8.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "boots2"){
+                    data9.pop();
+                    data9.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "boots3"){
+                    data10.pop();
+                    data10.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "boots4"){
+                    data11.pop();
+                    data11.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "helmet1"){
+                    data12.pop();
+                    data12.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "helmet2"){
+                    data13.pop();
+                    data13.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }else if(JSON.parse(block[p].transakcije[j]).item_other[0][0].name == "helmet3"){
+                    data14.pop();
+                    data14.push(parseInt(JSON.parse(block[p].transakcije[j]).value));
+                }
+            }
+        }
+    }
+    
+    let chart = new Chart(pricechart, {
+        type: "line",
+        data:{
+            labels:dates,
+            datasets:[{
+                label:"Sword1",
+                data:data1,
+                borderColor: "#A0C000",
+                backgroundColor:"#A0C000",
+                fill: false,
+                lineTension:0
+            },{
+                label:"Sword2",
+                data:data2,
+                borderColor: "#0000FF",
+                backgroundColor: "#0000FF",
+                fill: false,
+                lineTension:0
+            },{
+                label:"Sword3",
+                data:data3,
+                borderColor: "#00FF00",
+                backgroundColor:"#00FF00",
+                fill: false,
+                lineTension:0
+            },{
+                label:"Sword4",
+                data:data4,
+                borderColor: "#00FFFF",
+                backgroundColor:"#00FFFF",
+                fill: false,
+                lineTension:0
+            },{
+                label:"armor1",
+                data:data5,
+                borderColor: "#FF0000",
+                backgroundColor:"#FF0000",
+                fill: false,
+                lineTension:0
+            },{
+                label:"armor2",
+                data:data6,
+                borderColor: "#FF00FF",
+                backgroundColor:"#FF00FF",
+                fill: false,
+                lineTension:0
+            },{
+                label:"armor3",
+                data:data7,
+                borderColor: "#FFFF00",
+                backgroundColor:"#FFFF00",
+                fill: false,
+                lineTension:0
+            },{
+                label:"boots1",
+                data:data8,
+                borderColor: "#00007F",
+                backgroundColor:"#00007F",
+                fill: false,
+                lineTension:0
+            },{
+                label:"boots2",
+                data:data9,
+                borderColor: "#00FF7F",
+                backgroundColor:"#00FF7F",
+                fill: false,
+                lineTension:0
+            },{
+                label:"boots3",
+                data:data10,
+                borderColor: "#007F00",
+                backgroundColor:"#007F00",
+                fill: false,
+                lineTension:0
+            },{
+                label:"boots4",
+                data:data11,
+                borderColor: "#007FFF",
+                backgroundColor:"#007FFF",
+                fill: false,
+                lineTension:0
+            },{
+                label:"helmet1",
+                data:data12,
+                borderColor: "#007F7F",
+                backgroundColor:"#007F7F",
+                fill: false,
+                lineTension:0
+            },{
+                label:"helmet2",
+                data:data13,
+                borderColor: "#FF007F",
+                backgroundColor:"#FF007F",
+                fill: false,
+                lineTension:0
+            },{
+                label:"helmet3",
+                data:data14,
+                borderColor: "#FFFF7F",
+                backgroundColor:"#FFFF7F",
+                fill: false,
+                lineTension:0
+            }],
+        },
+        options:{
+            legend:{
+                display: true,
+                position:"right",
+            }
+        }
+    });
+</script>

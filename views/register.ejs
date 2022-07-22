@@ -1,0 +1,12 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+    <h3>Registracija:</h3>
+    <form action="/user/register" method="post">
+        <input type="text" name="username" class="form-control" placeholder="username" required  style="width:40%">
+        <input type="password" name="password" class="form-control" placeholder="password" required  style="width:40%">
+		<div class="tp">
+			<input type="submit" class="btn btn-success" value="Register">
+		</div>
+    </form>
+</div>

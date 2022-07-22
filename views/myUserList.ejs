@@ -1,0 +1,19 @@
+<% include header.ejs %>
+
+<div class="vsebina"></div>
+    <div>
+        Lista uporabnikov:
+        <% if (locals.users) { %>
+            <p><%= users.length %></p>  
+        <table>
+            <% for(var i=0; i < users.length; i++) { %>
+                <tr>
+                    <td><%= users[i].ip %></td>
+                    <td><%= users[i].port %></td>
+                </tr>
+            <% } %>
+        </table>
+        <% } %>
+    </div>
+
+</div>

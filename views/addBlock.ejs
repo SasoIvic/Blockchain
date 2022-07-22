@@ -1,0 +1,26 @@
+<% include header.ejs %>
+
+
+<script>
+    function myFunction() {
+        var del = document.getElementById("found");
+        if(del) {
+            del.outerHTML = "";
+        }
+        var x = document.getElementById("status");
+        x.innerHTML = "Mining...";
+    }
+</script>
+
+<div class="vsebina">
+    <h3>Create block: </h3>
+    <form action="/block/addBlock" method="post">
+        <div class="tp">
+            <input type="submit" class="btn btn-success" value="AddBlock" onclick="myFunction()">
+        </div>
+    </form>
+    <p id="status"></p>
+    <% if (locals.mining) { %>
+        <p id="found">Block najden.</p>
+    <% } %>
+</div>

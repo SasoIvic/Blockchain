@@ -1,0 +1,20 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+    <% if (locals.money) { %>
+        <p>Denar na voljo: <%= money.money %></p>
+    <% } %>
+    <h3>Make transaction with: </h3>
+    <form action="/transaction/addTransaction" method="post">
+        
+        <input type="text" name="username" class="form-control" placeholder="username" required  style="width:40%">
+        <input type="text" name="amount" class="form-control" placeholder="amount" required  style="width:40%">
+        <div class="tp">
+            <input type="submit" class="btn btn-success" value="Izvedi">
+        </div>
+    </form>
+
+</div>
+<% if (locals.err_noMoney) { %>
+    <p><%= err_noMoney %></p>
+<% } %>

@@ -1,0 +1,89 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+    <h2>Trgovina </h2>
+
+    Market:
+    <table id="market">
+    <% for(var item of items) { %> 
+        <tr>
+            <td><img id="slika_trgovina" src=<%= item.image %> ></td>
+            <td><b>Name: </b> <%= item.name %></td>
+            <td><b>Price: </b> <%= item.price %></td>
+            <td>
+                <form action="/transaction/buy_Market" method="post">
+                    <input type="hidden" name="itemID" value=<%= item.id %>>
+                    <div class="tp">
+                            <input type="submit" class="btn btn-success" value="Buy">
+                    </div>
+                </form>
+            </td>
+        </tr>
+    <% } %>
+    </table>
+
+    Privatne ponudbe:
+    <table id="offers">
+            <% for(var offer of offers) { %>
+                <% if( offer.value > 0 ){ %> 
+                <tr>
+                    <td><b>User: </b> <%= offer.user_me %></td>
+                    <td><img id="slika_trgovina" src=<%= offer.item_me[0][0].image %> ></td>
+
+                    <form action="/transaction/buy_Private" method="post">
+                        <td>Price: <%= offer.value %></td>
+                        <input type="hidden" name="myItemID" value=<%= item.id %>>
+                        <input type="hidden" name="user" value=<%= offer.user_me %>>
+                        <input type="hidden" name="itemID" value=<%= offer.item_me[0][0]._id %>>
+                        <input type="hidden" name="naslov" value=<%= offer.naslov %>>
+                        <input type="hidden" name="cena" value=<%= offer.value %>>
+                        <input type="hidden" name="timestamp" value=<%= offer.timestamp %>>
+                        <td>
+                            <div class="tp">
+                                <input type="submit" class="btn btn-success" value="Accept">
+                            </div>
+                        </td>
+                    </form>
+                </tr>
+                <% } else { %>
+                    <tr>
+                        <td><b>User: </b> <%= offer.user_me %></td>
+                        <td><img id="slika_trgovina" src=<%= offer.item_me[0][0].image %> ></td>
+    
+                        <form action="/transaction/trade" method="post">
+                            <td>Trade with: <input type="text" name="tradeItemID"></td>
+                            <input type="hidden" name="myItemID" value=<%= item.id %>>
+                            <input type="hidden" name="user" value=<%= offer.user_me %>>
+                            <input type="hidden" name="item" value=<%= offer.item_me[0][0]._id %>>
+                            <input type="hidden" name="naslov" value=<%= offer.naslov %>>
+                            <input type="hidden" name="timestamp" value=<%= offer.timestamp %>>
+                            <td>
+                                <div class="tp">
+                                    <input type="submit" class="btn btn-success" value="Trade">
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                    <% } %>
+            <% } %>
+    </table>
+
+    Predlogi:
+    <table id="offers">
+        <% for(var el of suggestions) { %> 
+            <tr>
+                <td><img id="slika_trgovina" src=<%= el.image %> ></td>
+                <td><b>ID_predlog: </b> <%= el.price %></td>
+                <td>
+                    <form action="/transaction/buy_Market" method="post">
+                        <input type="hidden" name="itemID" value=<%= el._id %>>
+                        <div class="tp">
+                                <input type="submit" class="btn btn-success" value="Buy">
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+</table>
+
+</div>

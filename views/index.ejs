@@ -1,0 +1,11 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+    <h2>Welcome!</h2>
+    
+    <% if (locals.userInfo) { %>
+        <h4>USer: <%= userInfo.name %></h4>
+        <h4>Your money: <%= userInfo.money %></h4>  
+    <% } %>
+
+</div>

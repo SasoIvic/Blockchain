@@ -1,0 +1,25 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+        <% if (locals.blockChain) { %>
+            <h2>Tvoj blockchain: </h2>
+            <% for(var i=0; i < blockChain.length; i++) { %>
+                <div class="blok">
+                    <p>index <%= blockChain[i].index %></p>
+                    <p>Transactions </p>
+
+                    <p><%= blockChain[i].transakcije %></p>
+
+                    <p>hash <%= blockChain[i].myHash %></p>
+                    <p>prev hash <%= blockChain[i].prevHash %></p>
+                </div>
+            <% } %>
+        <% } %>
+
+        <h2>Razpošlji svoj blockchain: </h2>
+        <form action="/block/broadcastMyBlockchain" method="post">
+            <div class="tp">
+                <input type="submit" class="btn btn-success" value="Broadcast">
+            </div>
+        </form>
+</div>

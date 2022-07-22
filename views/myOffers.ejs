@@ -1,0 +1,29 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+    <h2>Offers </h2>
+
+    <table>
+        <% for(var offer of offers) { %>
+            <tr>
+                <td><img id="slika_trgovina" src=<%= offer[0].item_me[0][0].image %> ></td>
+                <td><b>Name: </b> <%= offer[0].item_me[0][0].name %></td>
+                <td><img id="slika_trgovina" src=<%= offer[0].item_other[0][0].image %> ></td>
+                <td><b>Name: </b> <%= offer[0].item_other[0][0].name %></td>
+
+                <td>
+                    <form action="/transaction/acceptOffer" method="post">
+                        <input type="hidden" name="itemMe" value=<%= offer[0].item_me[0][0]._id %>>
+                        <input type="hidden" name="itemOther" value=<%= offer[0].item_other[0][0]._id %>>
+                        <input type="hidden" name="userMe" value=<%= offer[0].user_me %>>
+                        <input type="hidden" name="userOther" value=<%= offer[0].user_other %>>
+                        <div class="tp">
+                                <input type="submit" class="btn btn-success" value="Accept"> 
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+
+</div>

@@ -1,0 +1,32 @@
+<% include header.ejs %>
+
+<div class="vsebina">
+    <h2>Inventory </h2>
+
+    <table>
+    <% for(var i=0; i<items.length; i++) { %>
+        <% for(var item of items[i]) { %>
+            <tr>
+                <td><img id="slika_trgovina" src=<%= item.image %> ></td>
+                <td><b>Name: </b> <%= item.name %></td>
+                <td><b>ID: </b> <%= item._id %></td>
+                <td>
+                    <form action="/shop/addOffer" method="post">
+                        <input type="hidden" name="itemID" value=<%= item._id %>>
+                        <div class="tp">
+                                <input type="submit" class="btn btn-success" value="Offer for trade">
+                        </div>
+                    </form>
+                    <form action="/shop/privateSell" method="post">
+                        <input type="hidden" name="itemID" value=<%= item._id %>>
+                        <input type="number" name="itemPrice" placeholder="set price" required>
+                                <input type="submit" class="btn btn-success" value="Offer to sell">
+                        
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+    <% } %>
+    </table>
+
+</div>
